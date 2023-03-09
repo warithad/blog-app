@@ -19,7 +19,7 @@ const PostSchema = new Schema({
     }
 }, {timestamps: true});
 
-postSchema.virtual('url').get(function (){
+PostSchema.virtual('url').get(function (){
     return `/api/posts/${this._id}`;
 })
 
