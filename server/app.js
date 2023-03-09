@@ -23,6 +23,9 @@ app.use(morgan('dev'))
 app.use(helmet())
 app.use(compression())
 
+const router = require('./src/routes/router')
+
+app.use('/api/posts', router);
 
 app.use((req, res, next) =>{
     res.status(404);
