@@ -2,10 +2,21 @@ const Post = require('../models/post')
 const Comment = require('../models/comment')
 const async = require('async')
 
+//Get request for both published and unpublished posts `Accessible to only admin`
 exports.posts_get = async (req, res, next) => {
     const posts = await Post.find({}, 'title').exec();
     if(!posts){
-        res.status(500).json({message: 'Server error'});
+        res.status(500).json({message: 'Server Error'});
+        next(err);
+    }
+    return res.status(200).json({posts});
+}
+
+//Get requests for published posts `Accessible to anyone`
+exports.published_posts_get = async (req, res, next) => {
+    const posts = await Post.find({'published': true}, 'title').exec();
+    if(!posts){
+        res.status(500).json({message: 'Server Error'});
         next(err);
     }
     return res.status(200).json({posts});

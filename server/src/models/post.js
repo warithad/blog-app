@@ -16,6 +16,10 @@ const PostSchema = new Schema({
     body: {
         type: String,
         required: true
+    },
+    published: {
+        type: Boolean,
+        default: false
     }
 }, {timestamps: true});
 
