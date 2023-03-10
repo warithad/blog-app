@@ -69,3 +69,40 @@ exports.comment_add_post = (req, res, next) =>{
         return res.status(200).json({savedComment});
     })
 }
+
+
+exports.update_post_put = async (req, res, next) =>{
+    const {title, body, published} = req.body;
+    
+    const post = await Post.findById(req.params.id);
+
+    if(!post){
+         res.status(404).json({message: 'Post not found'})
+         next();
+    }
+
+    if(!published){
+        published = post.published;
+    }
+
+    if(!title){
+        title = post.title;
+    }
+    
+    if(!body){
+        body = post.body;
+    }
+
+    const updatedPost = await Post.findByIdAndUpdate(req.params.id, {
+        title,
+        body,
+        published
+    }).exec();
+
+    if(!updatedPost){
+        res.status(500).json({message: 'Server error'});
+        next();
+    }
+
+    return res.status(200).json({updatePost});
+}
